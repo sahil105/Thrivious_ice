@@ -4,15 +4,16 @@ import GitHubIcon from "@mui/icons-material/GitHub";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
 import MKTypography from "components/MKTypography";
+import { IMAGES } from "config/media";
 
-import Logo from "assets/images/logo.png";
+// import Logo from "assets/images/logo.png";
 
 const date = new Date().getFullYear();
 
 export default {
   brand: {
     name: "Thrivious Ice & Cooling System",
-    image: Logo,
+    image: IMAGES.logo,
     route: "/",
   },
   socials: [

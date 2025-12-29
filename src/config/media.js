@@ -18,6 +18,7 @@ export const IMAGES = {
   prdocut39: `${MEDIA_BASE}/images/gal_39-PhotoRoom.png`,
   prdocut31: `${MEDIA_BASE}/images/gal_31-PhotoRoom.jpg`,
   prdocut5: `${MEDIA_BASE}/images/gal_5-PhotoRoom.jpg`,
+  logo: `${MEDIA_BASE}/logo.png`
 
 };
 
