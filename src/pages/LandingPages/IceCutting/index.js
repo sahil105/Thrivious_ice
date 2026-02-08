@@ -1,7 +1,6 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-import { IMAGES } from "config/media";
 import MKBox from "components/MKBox";
 import MKTypography from "components/MKTypography";
 import MKButton from "components/MKButton";
@@ -16,81 +15,54 @@ import Newsletter from "pages/LandingPages/IceBlockMakingMachine/sections/Newsle
 import routes from "routes";
 import footerRoutes from "footer.routes";
 
-// Images
-// import bgImage from "https://www.thriviousice-cooling.com/uploads/images/gal_41-PhotoRoom.png";
-// import prdocut from "https://www.thriviousice-cooling.com/uploads/images/gal_28-PhotoRoom.jpg";
-import Product1 from "assets/images/ThriviousProducts/ice_cube.png"
-// import bgImage from "https://www.thriviousice-cooling.com/uploads/images/gal_5-PhotoRoom.jpg";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
-// import AccessibleTable from "../table";
 import BasicTable from "../table";
 import HorizontalTeamCard from "examples/Cards/TeamCards/HorizontalTeamCard";
 import ExampleCard from "pages/Presentation/components/ExampleCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
+import { IMAGES, getProductImageUrls } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
+
+const FOLDER = "Ice Cutting Machine";
+const heroImageUrls = getProductImageUrls(FOLDER, "TICS 21");
+const mainImageUrls = getProductImageUrls(FOLDER, "TICS 22");
+
 function IceCutting() {
-    const styles = {
-        textDecoration: 'none',
-        '&:hover': {
-          textDecoration: 'underline',
-      }
-    }
+  const heroImage = useFirstAvailableImage(heroImageUrls) || IMAGES.product4;
+  const mainImage = useFirstAvailableImage(mainImageUrls) || IMAGES.product4;
+  const styles = {
+    textDecoration: "none",
+    "&:hover": { textDecoration: "underline" },
+  };
   return (
     <>
-      <DefaultNavbar
-        routes={routes}
-        
-        light
-        // relative
-      />
-      <br></br>
-      <br></br>
-      <br></br>
-  <Grid item xs={12}>
-        <MKBox
-        minHeight="75vh"
+      <DefaultNavbar routes={routes} light />
+      <br />
+      <br />
+      <br />
+      <MKBox
         width="100%"
+        minHeight="75vh"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.dark.main, 0.1),
-              rgba(gradients.dark.state, 0.1)
-            )}, url(${IMAGES.product4})`,
-            backgroundSize: "100% 200%",
-            backgroundPosition: "center",
-          backgroundRepeat:"no-repeat",
-          display: "grid",
-          placeItems: "end",
+              rgba(gradients.dark.main, 0.35),
+              rgba(gradients.dark.state, 0.35)
+            )}, url(${heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          pb: 4,
         }}
       >
-        <Container>
-          <Grid
-            container
-            item
-            xs={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            sx={{ mx: "auto", textAlign: "center" }}
-          >
-            <MKTypography
-              variant="h3"
-              color="white"
-              sx={{mt:"300px", ml:"300px"}}
-            //   sx={({ breakpoints, typography: { size } }) => ({
-            //     [breakpoints.down("md")]: {
-            //       fontSize: size["3xl"],
-            //       mt:"60x"
-            //     },
-            //   })}
-            >
-                Ice Cutting Machine
-            </MKTypography>             
-          </Grid>
-        </Container>
+        <MKTypography variant="h3" color="white" sx={{ textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          Ice Cutting Machine
+        </MKTypography>
       </MKBox>
-      </Grid>
-      
+
       <Card
         sx={{
           p: 6,
@@ -107,11 +79,17 @@ function IceCutting() {
           <MKBox width="100%" pt={2} pb={1} px={2}>
             <MKBox
               component="img"
-              src={IMAGES.product4}
+              src={mainImage}
               alt={"Ice cutting machine"}
-              width="100%"
-              borderRadius="md"
-              shadow="lg"
+              sx={{
+                width: "100%",
+                height: 340,
+                objectFit: "cover",
+                objectPosition: "center",
+                display: "block",
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
             />
           </MKBox>
         </Grid>

@@ -5,9 +5,61 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#1A73E8" />
+    
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta http-equiv="X-Frame-Options" content="DENY" />
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
+    <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+    <meta http-equiv="Permissions-Policy" content="geolocation=(), microphone=(), camera=()" />
+    
+    <!-- Content Security Policy -->
+    <meta http-equiv="Content-Security-Policy" content="
+      default-src 'self';
+      script-src 'self' 'unsafe-inline' 'unsafe-eval' https://kit.fontawesome.com https://fonts.googleapis.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com data:;
+      img-src 'self' data: https: blob:;
+      connect-src 'self' https://www.thriviousice-cooling.com https://wa.me;
+      frame-src 'self' https://www.youtube.com https://player.vimeo.com;
+      object-src 'none';
+      base-uri 'self';
+      form-action 'self';
+      upgrade-insecure-requests;
+    " />
+    
+    <!-- Primary Meta Tags -->
+    <title>Thrivious Ice & Cooling System - Premium Ice Making Machines & Cold Storage Solutions</title>
+    <meta name="title" content="Thrivious Ice & Cooling System - Premium Ice Making Machines & Cold Storage Solutions" />
+    <meta name="description" content="Leading manufacturer of ice block making machines, ice cube machines, cold rooms, and cooling systems. Serving customers worldwide with quality products and excellent service." />
+    <meta name="keywords" content="ice making machine, ice block machine, ice cube machine, cold room, cooling system, refrigeration, ice plant, Thrivious" />
+    <meta name="author" content="Thrivious Ice & Cooling System" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="English" />
+    <meta name="revisit-after" content="7 days" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.thriviousice-cooling.com/" />
+    <meta property="og:title" content="Thrivious Ice & Cooling System - Premium Ice Making Machines" />
+    <meta property="og:description" content="Leading manufacturer of ice block making machines, ice cube machines, cold rooms, and cooling systems." />
+    <meta property="og:image" content="%PUBLIC_URL%/logo.png" />
+    <meta property="og:site_name" content="Thrivious Ice & Cooling System" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://www.thriviousice-cooling.com/" />
+    <meta property="twitter:title" content="Thrivious Ice & Cooling System - Premium Ice Making Machines" />
+    <meta property="twitter:description" content="Leading manufacturer of ice block making machines, ice cube machines, cold rooms, and cooling systems." />
+    <meta property="twitter:image" content="%PUBLIC_URL%/logo.png" />
+    
+    <!-- Favicon and Icons -->
     <link rel="apple-touch-icon" sizes="76x76" href="%PUBLIC_URL%/logo.png" />
+    <link rel="icon" type="image/png" href="%PUBLIC_URL%/logo.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Thrivious Ice & Cooling System</title>
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.thriviousice-cooling.com/" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700"

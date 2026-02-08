@@ -16,22 +16,23 @@ import Newsletter from "pages/LandingPages/IceBlockMakingMachine/sections/Newsle
 import routes from "routes";
 import footerRoutes from "footer.routes";
 
-// Images
-
-// import bgImage from "https://www.thriviousice-cooling.com/uploads/images/gal_5-PhotoRoom.jpg";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
-// import AccessibleTable from "../table";
-import { Watermark } from 'react-watermark-component';
+import { Watermark } from "react-watermark-component";
 import BasicTable from "../table";
-import { IMAGES } from "config/media";
+import { IMAGES, getProductImageUrls } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
+
+const FOLDER = "Ice Block Making Machine";
+const HERO_FILENAME = "TICS 14";
+// Try .jpeg, .png, .jpg – use whichever exists
+const heroImageUrls = getProductImageUrls(FOLDER, HERO_FILENAME);
 
 function IceBlockMakingMachine() {
-    const styles = {
-        textDecoration: 'none',
-        '&:hover': {
-          textDecoration: 'underline',
-      }
-    }
+  const heroImage = useFirstAvailableImage(heroImageUrls) || IMAGES.prdocut5;
+  const styles = {
+    textDecoration: "none",
+    "&:hover": { textDecoration: "underline" },
+  };
   return (
     <>
       <DefaultNavbar
@@ -45,64 +46,26 @@ function IceBlockMakingMachine() {
       <br></br>
 
       <MKBox
-        minHeight="75vh"
         width="100%"
+        minHeight="75vh"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.dark.main, 0.6),
-              rgba(gradients.dark.state, 0.6)
-            )}, url(${IMAGES.prdocut5})`,
-          // backgroundSize: "cover",
-          backgroundSize: "100% 100%", // Adjust the background size as needed
+              rgba(gradients.dark.main, 0.35),
+              rgba(gradients.dark.state, 0.35)
+            )}, url(${heroImage})`,
+          backgroundSize: "cover",
           backgroundPosition: "center",
-          display: "grid",
-          placeItems: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          pb: 4,
         }}
       >
-        <Container>
-          <Grid
-            container
-            item
-            xs={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            sx={{ mx: "auto", textAlign: "center" }}
-          >
-            <MKTypography
-              variant="h3"
-              color="white"
-              sx={{mt:"360px"}}
-            //   sx={({ breakpoints, typography: { size } }) => ({
-            //     [breakpoints.down("md")]: {
-            //       fontSize: size["3xl"],
-            //       mt:"60x"
-            //     },
-            //   })}
-            >
-                Ice Block Making Machine
-            </MKTypography>           
-            {/* <MKTypography variant="h6" color="white" mt={8} mb={1}>
-              Find us on
-            </MKTypography>
-            <MKBox display="flex" justifyContent="center" alignItems="center">
-              <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                <i className="fab fa-facebook" />
-              </MKTypography>
-              <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                <i className="fab fa-instagram" />
-              </MKTypography>
-              <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                <i className="fab fa-twitter" />
-              </MKTypography>
-              <MKTypography component="a" variant="body1" color="white" href="#">
-                <i className="fab fa-google-plus" />
-              </MKTypography>
-            </MKBox> */}
-          </Grid>
-        </Container>
+        <MKTypography variant="h3" color="white" sx={{ textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          Ice Block Making Machine
+        </MKTypography>
       </MKBox>
       <Card
         sx={{

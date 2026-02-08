@@ -16,85 +16,56 @@ import Newsletter from "pages/LandingPages/IceBlockMakingMachine/sections/Newsle
 import routes from "routes";
 import footerRoutes from "footer.routes";
 
-// Images
-// import bgImage from "https://www.thriviousice-cooling.com/uploads/images/gal_32-PhotoRoom.jpg";
-// import prdocut from "https://www.thriviousice-cooling.com/uploads/images/gal_42-PhotoRoom.png";
-import Product1 from "assets/images/ThriviousProducts/ice_cube.png"
-import bgImage from "assets/images/slider-01.png";
-
-// import bgImage from "https://www.thriviousice-cooling.com/uploads/images/gal_5-PhotoRoom.jpg";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
-// import AccessibleTable from "../table";
 import BasicTable from "../table";
 import HorizontalTeamCard from "examples/Cards/TeamCards/HorizontalTeamCard";
 import ExampleCard from "pages/Presentation/components/ExampleCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
-// import BM1 from "https://www.thriviousice-cooling.com/uploads/images/gal_31-PhotoRoom.jpg"
-import { IMAGES } from "config/media";
+import { IMAGES, getProductImageUrls } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
+
+const FOLDER = "Cold Room";
+const heroImageUrls = getProductImageUrls(FOLDER, "TICS 35");
+const mainImageUrls = getProductImageUrls(FOLDER, "TICS 34");
+const cardImageUrls = getProductImageUrls(FOLDER, "TICS 33");
+
 function ColdRoom() {
-    const styles = {
-        textDecoration: 'none',
-        '&:hover': {
-          textDecoration: 'underline',
-      }
-    }
+  const heroImage = useFirstAvailableImage(heroImageUrls) || IMAGES.prdocut42;
+  const mainImage = useFirstAvailableImage(mainImageUrls) || IMAGES.prdocut42;
+  const cardImage = useFirstAvailableImage(cardImageUrls) || IMAGES.prdocut31;
+  const styles = {
+    textDecoration: "none",
+    "&:hover": { textDecoration: "underline" },
+  };
   return (
     <>
-      <DefaultNavbar
-        routes={routes}
-        light
-      />
-      <br></br>
-      <br></br>
-      <br></br>
-
-  <Grid item xs={12}>
-        <MKBox
-        minHeight="75vh"
+      <DefaultNavbar routes={routes} light />
+      <br />
+      <br />
+      <br />
+      <MKBox
         width="100%"
+        minHeight="75vh"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.dark.main, 0.1),
-              rgba(gradients.dark.state, 0.1)
-            )}, url(${bgImage})`,
-            backgroundSize: "100% 100%",
-            backgroundPosition: "center",
-          backgroundRepeat:"no-repeat",
-
-          display: "grid",
-          placeItems: "end",
+              rgba(gradients.dark.main, 0.35),
+              rgba(gradients.dark.state, 0.35)
+            )}, url(${heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          pb: 4,
         }}
       >
-        <Container>
-          <Grid
-            container
-            item
-            xs={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            sx={{ mx: "auto", textAlign: "center" }}
-          >
-            <MKTypography
-              variant="h3"
-              color="white"
-              sx={{mt:"300px"}}
-            //   sx={({ breakpoints, typography: { size } }) => ({
-            //     [breakpoints.down("md")]: {
-            //       fontSize: size["3xl"],
-            //       mt:"60x"
-            //     },
-            //   })}
-            >
-              Cold Room
-            </MKTypography>             
-          </Grid>
-        </Container>
+        <MKTypography variant="h3" color="white" sx={{ textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          Cold Room
+        </MKTypography>
       </MKBox>
-      </Grid>
-      
+
       <Card
         sx={{
           p: 6,
@@ -111,11 +82,17 @@ function ColdRoom() {
           <MKBox width="100%" pt={2} pb={1} px={2}>
             <MKBox
               component="img"
-              src={IMAGES.prdocut42}
+              src={mainImage}
               alt={"cold room"}
-              width="100%"
-              borderRadius="md"
-              shadow="lg"
+              sx={{
+                width: "100%",
+                height: 340,
+                objectFit: "cover",
+                objectPosition: "center",
+                display: "block",
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
             />
           </MKBox>
         </Grid>
@@ -168,7 +145,7 @@ function ColdRoom() {
           </Grid>
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
-              image={IMAGES.prdocut31}
+              image={cardImage}
               title="Cold Room"
               description=""
               action={{

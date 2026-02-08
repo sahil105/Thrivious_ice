@@ -8,17 +8,20 @@ import MKTypography from "components/MKTypography";
 import MKInput from "components/MKInput";
 import MKButton from "components/MKButton";
 
-// Images
-import macbook from "assets/images/macbook.png";
-import Product1 from "assets/images/product1-1.jpg"
-import Product2 from "../../../../assets/images/direct-ref-01.jpg";
+import { getProductImageUrls } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
 
 import RotatingCard from "examples/Cards/RotatingCard";
 import RotatingCardFront from "examples/Cards/RotatingCard/RotatingCardFront";
 import RotatingCardBack from "examples/Cards/RotatingCard/RotatingCardBack";
 import CustomizedTables from "pages/LandingPages/table";
 
+const FOLDER = "Ice Block Making Machine";
+const TCS37_URLS = getProductImageUrls(FOLDER, "TCS 37", ["jpeg", "png", "jpg"]);
+
 function Newsletter() {
+  const productImage = useFirstAvailableImage(TCS37_URLS);
+
   function createData(name, calories, fat, carbs) {
     return { name, calories, fat, carbs };
   }
@@ -39,14 +42,14 @@ function Newsletter() {
       <Grid item xs={12} lg={4} sx={{ mx: "auto", ml:'20px' }}>
             <RotatingCard>
               <RotatingCardFront
-                image={Product1}
+                image={productImage}
                 icon="jg"
                 title={""}
                 // description="Ice Block Making Machine"
                 from = "nl"
               />
               <RotatingCardBack
-                image={Product2}
+                image={productImage}
                 title=""
                 description="Ice Block Making Machine."
                 // action={{

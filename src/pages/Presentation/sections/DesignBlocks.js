@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 // @mui material components
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -8,8 +6,7 @@ import MKBox from "components/MKBox";
 import MKBadge from "components/MKBadge";
 import MKTypography from "components/MKTypography";
 
-// Presentation page components
-import ExampleCard from "pages/Presentation/components/ExampleCard";
+import ProductCard from "pages/Presentation/components/ProductCard";
 
 // Data
 import data from "pages/Presentation/sections/data/designBlocksData";
@@ -29,11 +26,15 @@ function DesignBlocks() {
       </Grid>
       <Grid item xs={12} lg={9}>
         <Grid container spacing={3}>
-          {items.map(({ image, name, count, route, pro }) => (
+          {items.map(({ folderName, imageFile, name, route, fallbackImage }) => (
             <Grid item xs={12} md={4} sx={{ mb: 2 }} key={name}>
-              <Link to={pro ? "/" : route}>
-                <ExampleCard image={image} name={name} count={count} pro={pro} />
-              </Link>
+              <ProductCard
+                folderName={folderName}
+                imageFile={imageFile}
+                name={name}
+                route={route}
+                fallbackImage={fallbackImage}
+              />
             </Grid>
           ))}
         </Grid>

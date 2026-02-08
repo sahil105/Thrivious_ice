@@ -1,65 +1,63 @@
 import { IMAGES } from "config/media";
-import Product1 from "assets/images/direct-ref-01.jpg";
-// import product2 from "https://www.thriviousice-cooling.com/uploads/images/gal_1-PhotoRoom.jpg";
 
-// import product2 from "assets/images/ThriviousProducts/direce_reffection.png";
-// import product3 from "https://www.thriviousice-cooling.com/uploads/images/gal_26-PhotoRoom.jpg";
-import product4 from "assets/images/ThriviousProducts/ice_crushser.png";
-// import product5 from "https://www.thriviousice-cooling.com/uploads/images/gal_28-PhotoRoom.jpg";
-
-import product6 from "assets/images/ThriviousProducts/cold_storage.png";
-// import product7 from "https://www.thriviousice-cooling.com/uploads/images/gal_45-PhotoRoom.jpg";
-
-
-const imagesPrefix =
-  "https://raw.githubusercontent.com/creativetimofficial/public-assets/master/material-design-system/presentation/sections";
-
-
+/**
+ * Products section data. Images are loaded from server folders (uploads/products/<folderName>/)
+ * via ProductCard using folderName + imageFile (e.g. TICS 01).
+ */
 export default [
   {
     title: "Products",
     description: "Ice & Colling products which matches your need",
     items: [
       {
-        image: Product1,
+        folderName: "Ice Block Making Machine",
+        imageFile: "TICS 01",
         name: "Ice Block Making Machine",
         route: "/products/ice-block-making-machine",
+        fallbackImage: IMAGES.prdocut5,
       },
       {
-        image: IMAGES.bgImage,
-        name: "Direct Refraction Block Ice Machine",
+        folderName: "Direct Refrigeration Block Ice Machine",
+        imageFile: "TICS 29",
+        name: "Direct Refrigeration Block Ice Machine",
         route: "/products/direct-refrigeration-block-ice-machine",
+        fallbackImage: IMAGES.product23,
       },
       {
-        image: IMAGES.product3,
+        folderName: "Ice Cube Cutting Machine",
+        imageFile: "TICS 23",
         name: "Ice Cube Machine",
         route: "/products/ice-cube-machine",
-
+        fallbackImage: IMAGES.product3,
       },
       {
-        image: product4,
+        folderName: "Ice Crusher Machine",
+        imageFile: "TICS 37",
         name: "Ice Crusher Machine",
         route: "/products/ice-crusher-machine",
-
+        fallbackImage: IMAGES.prdocut39,
       },
       {
-        image: IMAGES.product5,
+        folderName: "Ice Cutting Machine",
+        imageFile: "TICS 21",
         name: "Ice Cutting Machine",
         route: "/products/ice-cutting-machine",
-
+        fallbackImage: IMAGES.product4,
       },
       {
-        image: product6,
+        folderName: "Cold Room",
+        imageFile: "TICS 33",
         name: "Cold Room",
         route: "/products/cold-room",
-
+        fallbackImage: IMAGES.prdocut42,
       },
       {
-        image: IMAGES.product5,
+        folderName: "Flake Ice Machine",
+        imageFile: "TICS 32",
         name: "Flake Ice Machine",
         route: "/products/Flake-ice-machine",
-
-      }
+        fallbackImage: IMAGES.product5,
+      },
     ],
   },
 ];

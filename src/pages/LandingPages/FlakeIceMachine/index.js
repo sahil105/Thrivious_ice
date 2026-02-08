@@ -16,82 +16,54 @@ import Newsletter from "pages/LandingPages/IceBlockMakingMachine/sections/Newsle
 import routes from "routes";
 import footerRoutes from "footer.routes";
 
-// Images
-// import bgImage from "assets/images/Gallery/gal_44-PhotoRoom.jpg";
-// import prdocut from "assets/images/Gallery/gal_45-PhotoRoom.jpg";
-import Product1 from "assets/images/ThriviousProducts/ice_cube.png"
-// import bgImage from "assets/images/Gallery/gal_5-PhotoRoom.jpg";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
-// import AccessibleTable from "../table";
 import BasicTable from "../table";
 import HorizontalTeamCard from "examples/Cards/TeamCards/HorizontalTeamCard";
 import ExampleCard from "pages/Presentation/components/ExampleCard";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
-import { IMAGES } from "config/media";
+import { IMAGES, getProductImageUrls } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
+
+const FOLDER = "Flake Ice Machine";
+const heroImageUrls = getProductImageUrls(FOLDER, "TICS 32");
+const mainImageUrls = getProductImageUrls(FOLDER, "TICS 32");
+
 function FlakeIceMachine() {
-    const styles = {
-        textDecoration: 'none',
-        '&:hover': {
-          textDecoration: 'underline',
-      }
-    }
+  const heroImage = useFirstAvailableImage(heroImageUrls) || IMAGES.prdocut44;
+  const mainImage = useFirstAvailableImage(mainImageUrls) || IMAGES.product5;
+  const styles = {
+    textDecoration: "none",
+    "&:hover": { textDecoration: "underline" },
+  };
   return (
     <>
-      <DefaultNavbar
-        routes={routes}
-        
-        light
-        // relative
-      />
-      <br></br>
-      <br></br>
-      <br></br>
-  <Grid item xs={12}>
-  <MKBox
-  minHeight="75vh"
-  width="100%"
-  sx={{
-    backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
-      `${linearGradient(
-        rgba(gradients.dark.main, 0.1),
-        rgba(gradients.dark.state, 0.1)
-      )}, url(${IMAGES.prdocut44})`,
-      backgroundSize: "100% 130%", // Adjust the background size as needed
-      backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    display: "grid",
-    placeItems: "end",
-  }}
->
-        <Container>
-          <Grid
-            container
-            item
-            xs={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            sx={{ mx: "auto", textAlign: "center" }}
-          >
-            <MKTypography
-              variant="h3"
-              color="white"
-              sx={{mt:"300px"}}
-            //   sx={({ breakpoints, typography: { size } }) => ({
-            //     [breakpoints.down("md")]: {
-            //       fontSize: size["3xl"],
-            //       mt:"60x"
-            //     },
-            //   })}
-            >
-              Flake Ice Machine
-            </MKTypography>             
-          </Grid>
-        </Container>
+      <DefaultNavbar routes={routes} light />
+      <br />
+      <br />
+      <br />
+      <MKBox
+        width="100%"
+        minHeight="75vh"
+        sx={{
+          backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
+            `${linearGradient(
+              rgba(gradients.dark.main, 0.35),
+              rgba(gradients.dark.state, 0.35)
+            )}, url(${heroImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          pb: 4,
+        }}
+      >
+        <MKTypography variant="h3" color="white" sx={{ textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          Flake Ice Machine
+        </MKTypography>
       </MKBox>
-      </Grid>
-      
+
       <Card
         sx={{
           p: 6,
@@ -108,11 +80,17 @@ function FlakeIceMachine() {
           <MKBox width="100%" pt={2} pb={1} px={2}>
             <MKBox
               component="img"
-              src={IMAGES.product5}
+              src={mainImage}
               alt={"Flake ice machine"}
-              width="100%"
-              borderRadius="md"
-              shadow="lg"
+              sx={{
+                width: "100%",
+                height: 340,
+                objectFit: "cover",
+                objectPosition: "center",
+                display: "block",
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
             />
           </MKBox>
         </Grid>

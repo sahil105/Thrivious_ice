@@ -7,11 +7,15 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import theme from "assets/theme";
 import Presentation from "layouts/pages/presentation";
+import NotFound from "pages/NotFound";
+import ErrorBoundary from "components/ErrorBoundary";
+import { usePageTitle } from "hooks/usePageTitle";
 
 import routes from "routes";
 
-export default function App() {
+function AppContent() {
   const { pathname } = useLocation();
+  usePageTitle();
 
   // Setting page scroll to 0 when changing the route
   useEffect(() => {
@@ -33,14 +37,22 @@ export default function App() {
     });
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Routes>
-        {getRoutes(routes)}
-        <Route path="/" element={<Presentation />} />
-        <Route path="*" element={<Navigate to="/" />} />
+    <Routes>
+      {getRoutes(routes)}
+      <Route path="/" element={<Presentation />} />
+      <Route path="/404" element={<NotFound />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
 
-      </Routes>
-    </ThemeProvider>
+export default function App() {
+  return (
+    <ErrorBoundary>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <AppContent />
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }

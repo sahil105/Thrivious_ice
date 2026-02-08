@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 
 const MapContainer = () => {
+  const mapRef = useRef(null);
+  const mapInstanceRef = useRef(null);
+
   const markers = [
     { lat: -30.5595, lng: 22.9375, label: "South Africa" },
     { lat: 25.2048, lng: 55.2708, label: "Dubai" },
@@ -18,38 +23,61 @@ const MapContainer = () => {
     { lat: -14.2350, lng: -51.9253, label: "Brazil" },
     { lat: 31.0461, lng: 34.8516, label: "Israel" },
   ];
-  
-  const baseUrl = "https://maps.googleapis.com/maps/api/staticmap";
-  const apiKey = "AIzaSyCZCxLJYDcWONUbd7ndQfzLZiAKy1qhgwE";
-  
-  const markerQueryString = markers
-    .map((marker) => `markers=color:red%7Clabel:${marker.label[0]}%7C${marker.lat},${marker.lng}`)
-    .join("&");
-  
-  const mapUrl = `${baseUrl}?size=800x800&maptype=roadmap&${markerQueryString}&key=${apiKey}`;
-  
+
+  // Calculate center point (average of all markers)
+  const centerLat = markers.reduce((sum, m) => sum + m.lat, 0) / markers.length;
+  const centerLng = markers.reduce((sum, m) => sum + m.lng, 0) / markers.length;
+
+  useEffect(() => {
+    // Initialize map only once
+    if (!mapInstanceRef.current && mapRef.current) {
+      // Fix for default marker icons
+      delete L.Icon.Default.prototype._getIconUrl;
+      L.Icon.Default.mergeOptions({
+        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+      });
+
+      // Create map instance
+      const map = L.map(mapRef.current).setView([centerLat, centerLng], 2);
+
+      // Add tile layer
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Add markers
+      markers.forEach((marker) => {
+        L.marker([marker.lat, marker.lng])
+          .addTo(map)
+          .bindPopup(marker.label);
+      });
+
+      mapInstanceRef.current = map;
+    }
+
+    // Cleanup function
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []); // Empty dependency array - only run once
+
   return (
-    <img src={mapUrl} alt="Map with markers" />
+    <div 
+      ref={mapRef} 
+      style={{ 
+        width: '100%', 
+        height: '600px', 
+        marginTop: '20px',
+        zIndex: 0
+      }} 
+    />
   );
-  // const markers = [
-  //   { lat: 25.2048, lng: 55.2708, label: 'Dubai' },
-  //   { lat: -33.8679, lng: 151.2073, label: 'Sydney' },
-  //   { lat: 51.5074, lng: -0.1278, label: 'London' },
-  //   { lat: 40.7128, lng: -74.0060, label: 'New York' },
-  //   { lat: 31.7683, lng: 35.2137, label: 'Israel' },
-  //   // Add more locations here
-  // ];
-
-  // const apiKey = `AIzaSyCZCxLJYDcWONUbd7ndQfzLZiAKy1qhgwE`
-  
-  // // Construct the URL for the static map
-  // const url = `https://maps.googleapis.com/maps/api/staticmap?center=${markers[0].lat},${markers[0].lng}&zoom=2&size=600x400&maptype=roadmap&key=${apiKey}&${markers.map(marker => `markers=label:${marker.label}|${marker.lat},${marker.lng}`).join('&')}`;
-
-  // return (
-  //   <div>
-  //     <img src={url} alt="Map" />
-  //   </div>
-  // );
 };
 
 export default MapContainer;

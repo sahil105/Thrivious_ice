@@ -31,21 +31,74 @@ function ContactUs() {
 
   const [msg, setMsg] = useState('')
   const [open, setOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [successOpen, setSuccessOpen] = useState(false)
 
-  const handleChange =(e) => {
-    console.log(e.target.value);
-    setMsg(e.target.value)
-  }
-  const handleSubmit = (event) => {
+  // Sanitize and validate input
+  const sanitizeInput = (input) => {
+    // Remove potentially dangerous characters and limit length
+    return input
+      .trim()
+      .replace(/[<>]/g, '') // Remove < and > to prevent HTML injection
+      .substring(0, 1000); // Limit message length
+  };
+
+  const validateInput = (input) => {
+    const sanitized = sanitizeInput(input);
+    if (sanitized.length === 0) {
+      return { valid: false, message: 'Message cannot be empty' };
+    }
+    if (sanitized.length < 3) {
+      return { valid: false, message: 'Message is too short' };
+    }
+    return { valid: true, sanitized };
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value;
+    // Limit input length client-side
+    if (value.length <= 1000) {
+      setMsg(value);
+    }
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (msg === "") {
-      setOpen(true)
+    
+    const validation = validateInput(msg);
+    if (!validation.valid) {
+      setOpen(true);
       return false;
     }
-    const encodedMessage = encodeURIComponent(msg);
-    const whatsappLink = `https://wa.me/919173251388?text=${encodedMessage}`;
-    window.open(whatsappLink, '_blank');
-    setMsg('')
+    
+    setIsSubmitting(true);
+    
+    // Simulate a small delay for better UX
+    await new Promise(resolve => setTimeout(resolve, 500));
+    
+    try {
+      // Use sanitized input
+      const sanitizedMessage = validation.sanitized;
+      const encodedMessage = encodeURIComponent(sanitizedMessage);
+      
+      // Validate WhatsApp URL before opening
+      const phoneNumber = '919173251388';
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      
+      // Additional security: verify URL format
+      if (whatsappLink.startsWith('https://wa.me/') && /^\d+$/.test(phoneNumber)) {
+        window.open(whatsappLink, '_blank', 'noopener,noreferrer');
+        setMsg('');
+        setIsSubmitting(false);
+        setSuccessOpen(true);
+      } else {
+        throw new Error('Invalid URL format');
+      }
+    } catch (error) {
+      console.error('Error opening WhatsApp:', error);
+      setIsSubmitting(false);
+      setOpen(true);
+    }
   }
   const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -157,8 +210,22 @@ function ContactUs() {
                   </Grid>
                 </Grid>
                 <Grid container item justifyContent="center" xs={12} mt={5} mb={2}>
-                  <MKButton type="submit" onClick={handleSubmit} variant="gradient" color="info">
-                    Send Message
+                  <MKButton 
+                    type="submit" 
+                    onClick={handleSubmit} 
+                    variant="gradient" 
+                    color="info"
+                    disabled={isSubmitting}
+                    sx={{
+                      minWidth: 150,
+                      "&:hover": {
+                        transform: "translateY(-2px)",
+                        boxShadow: "0 6px 20px 0 rgba(0, 118, 255, 0.5)",
+                      },
+                      transition: "all 0.3s ease",
+                    }}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </MKButton>
                 </Grid>
               </MKBox>
@@ -172,6 +239,19 @@ function ContactUs() {
         onClose={handleClose}
         message="Please Fill Message first then send it."
         action={action}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      />
+      <Snackbar
+        open={successOpen}
+        autoHideDuration={4000}
+        onClose={() => setSuccessOpen(false)}
+        message="Opening WhatsApp... Message sent successfully!"
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        sx={{
+          "& .MuiSnackbarContent-root": {
+            backgroundColor: "#4caf50",
+          }
+        }}
       />
       <DefaultFooter content={footerRoutes} />
     </>

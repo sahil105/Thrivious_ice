@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AboutUs() {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = React.useState(true);
   
     const handleExpandClick = () => {
       setExpanded(!expanded);

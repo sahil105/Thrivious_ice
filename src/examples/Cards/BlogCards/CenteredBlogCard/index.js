@@ -22,8 +22,12 @@ function CenteredBlogCard({ image, title, description, action }) {
           position="relative"
           zIndex={1}
           sx={{
-            '&:hover': {
-              backgroundColor: 'grey',
+            height: 260,
+            objectFit: "cover",
+            objectPosition: "center",
+            display: "block",
+            "&:hover": {
+              backgroundColor: "grey",
               opacity: [0.9, 0.8, 0.7],
             },
           }}

@@ -1,4 +1,13 @@
-const MEDIA_BASE = "https://www.thriviousice-cooling.com/uploads";
+export const MEDIA_BASE = "https://www.thriviousice-cooling.com/uploads";
+
+/** Build full URLs for a product image – try .jpeg, .png, .jpg (first that exists will be used). */
+export function getProductImageUrls(folderName, baseFilename, extensions = ["jpeg", "png", "jpg"]) {
+  if (!folderName || !baseFilename) return [];
+  return extensions.map(
+    (ext) =>
+      `${MEDIA_BASE}/products/${encodeURIComponent(folderName)}/${encodeURIComponent(baseFilename + "." + ext)}`
+  );
+}
 
 export const IMAGES = {
   bgImage: `${MEDIA_BASE}/images/gal_1-PhotoRoom.jpg`,
@@ -18,8 +27,8 @@ export const IMAGES = {
   prdocut39: `${MEDIA_BASE}/images/gal_39-PhotoRoom.png`,
   prdocut31: `${MEDIA_BASE}/images/gal_31-PhotoRoom.jpg`,
   prdocut5: `${MEDIA_BASE}/images/gal_5-PhotoRoom.jpg`,
-  logo: `${MEDIA_BASE}/logo.png`
-
+  logo: `${MEDIA_BASE}/logo.png`,
+  home: `${MEDIA_BASE}/home.png`,
 };
 
 export const VIDEOS = {

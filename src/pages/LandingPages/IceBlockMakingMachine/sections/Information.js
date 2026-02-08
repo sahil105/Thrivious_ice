@@ -5,9 +5,15 @@ import MKBox from "components/MKBox";
 
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
-import BM from "../../../../assets/images/direct-ref-01.jpg";
+import { getProductImageUrls, IMAGES } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
+
+const FOLDER = "Ice Block Making Machine";
+const CARD_FILENAME = "TICS 16";
+const cardImageUrls = getProductImageUrls(FOLDER, CARD_FILENAME);
 
 function Information() {
+  const cardImage = useFirstAvailableImage(cardImageUrls) || IMAGES.prdocut5;
   return (
     <MKBox component="section" py={12}>
       <Container>
@@ -54,7 +60,7 @@ function Information() {
           </Grid>
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
-              image={BM}
+              image={cardImage}
               title="Ice Block Making Machine"
               description=""
               action={{

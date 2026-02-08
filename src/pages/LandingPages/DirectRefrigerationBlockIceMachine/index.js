@@ -15,25 +15,27 @@ import Featuring from "pages/LandingPages/IceBlockMakingMachine/sections/Featuri
 import routes from "routes";
 import footerRoutes from "footer.routes";
 
-// Images
-import { IMAGES } from "config/media";
-
-// import bgImage from "https://www.thriviousice-cooling.com/uploads/images/gal_1-PhotoRoom.jpg";
+import { IMAGES, getProductImageUrls } from "config/media";
+import useFirstAvailableImage from "hooks/useFirstAvailableImage";
 import CenteredBlogCard from "examples/Cards/BlogCards/CenteredBlogCard";
-// import AccessibleTable from "../table";
 import BasicTable from "../table";
 import DefaultInfoCard from "examples/Cards/InfoCards/DefaultInfoCard";
-// import BM from "https://www.thriviousice-cooling.com/uploads/images/gal_23-PhotoRoom.jpg";
-// import BM1 from "https://www.thriviousice-cooling.com/uploads/images/gal_24-PhotoRoom.jpg";
 import Newsletter from "./Newsletter";
 
+const FOLDER = "Direct Refrigeration Block Ice Machine";
+const EXTS = ["jpeg", "png", "jpg", "JPG"];
+const heroImageUrls = getProductImageUrls(FOLDER, "TICS 31", EXTS);
+const mainImageUrls = getProductImageUrls(FOLDER, "TICS 30", EXTS);
+const cardImageUrls = getProductImageUrls(FOLDER, "TICS 29", EXTS);
+
 function DirectRefrigerationBlockIceMachine() {
-    const styles = {
-        textDecoration: 'none',
-        '&:hover': {
-          textDecoration: 'underline',
-      }
-    }
+  const heroImage = useFirstAvailableImage(heroImageUrls) || IMAGES.bgImage;
+  const mainImage = useFirstAvailableImage(mainImageUrls) || IMAGES.product23;
+  const cardImage = useFirstAvailableImage(cardImageUrls) || IMAGES.product24;
+  const styles = {
+    textDecoration: "none",
+    "&:hover": { textDecoration: "underline" },
+  };
   return (
     <>
       <DefaultNavbar
@@ -46,64 +48,26 @@ function DirectRefrigerationBlockIceMachine() {
      <br></br>
 
      <MKBox
-        minHeight="75vh"
         width="100%"
-      
+        minHeight="75vh"
         sx={{
           backgroundImage: ({ functions: { linearGradient, rgba }, palette: { gradients } }) =>
             `${linearGradient(
-              rgba(gradients.dark.main, 0.6),
-              rgba(gradients.dark.state, 0.6)
-            )}, url(${IMAGES.bgImage})`,
-          backgroundSize: "100% 120%",
+              rgba(gradients.dark.main, 0.35),
+              rgba(gradients.dark.state, 0.35)
+            )}, url(${heroImage})`,
+          backgroundSize: "cover",
           backgroundPosition: "center",
-          display: "grid",
-          placeItems: "center",
+          backgroundRepeat: "no-repeat",
+          display: "flex",
+          alignItems: "flex-end",
+          justifyContent: "center",
+          pb: 4,
         }}
       >
-        <Container>
-          <Grid
-            container
-            item
-            xs={12}
-            lg={8}
-            justifyContent="center"
-            alignItems="center"
-            flexDirection="column"
-            sx={{ mx: "auto", textAlign: "center" }}
-          >
-            <MKTypography
-              variant="h3"
-              color="white"
-              sx={{mt:"500px"}}
-            //   sx={({ breakpoints, typography: { size } }) => ({
-            //     [breakpoints.down("md")]: {
-            //       fontSize: size["3xl"],
-            //       mt:"60x"
-            //     },
-            //   })}
-            >
-              Direct Refrigeration Block Ice Machine
-            </MKTypography>           
-            {/* <MKTypography variant="h6" color="white" mt={8} mb={1}>
-              Find us on
-            </MKTypography>
-            <MKBox display="flex" justifyContent="center" alignItems="center">
-              <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                <i className="fab fa-facebook" />
-              </MKTypography>
-              <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                <i className="fab fa-instagram" />
-              </MKTypography>
-              <MKTypography component="a" variant="body1" color="white" href="#" mr={3}>
-                <i className="fab fa-twitter" />
-              </MKTypography>
-              <MKTypography component="a" variant="body1" color="white" href="#">
-                <i className="fab fa-google-plus" />
-              </MKTypography>
-            </MKBox> */}
-          </Grid>
-        </Container>
+        <MKTypography variant="h3" color="white" sx={{ textShadow: "0 2px 8px rgba(0,0,0,0.9)" }}>
+          Direct Refrigeration Block Ice Machine
+        </MKTypography>
       </MKBox>
       
       <Card
@@ -122,11 +86,17 @@ function DirectRefrigerationBlockIceMachine() {
           <MKBox width="100%" pt={2} pb={1} px={2}>
             <MKBox
               component="img"
-              src={IMAGES.product23}
+              src={mainImage}
               alt={"Direct Refrigeration Block Ice Machine"}
-              width="100%"
-              borderRadius="md"
-              shadow="lg"
+              sx={{
+                width: "100%",
+                height: 340,
+                objectFit: "cover",
+                objectPosition: "center",
+                display: "block",
+                borderRadius: 2,
+                boxShadow: 3,
+              }}
             />
           </MKBox>
         </Grid>
@@ -185,8 +155,8 @@ function DirectRefrigerationBlockIceMachine() {
           </Grid>
           <Grid item xs={12} lg={4} sx={{ ml: "auto", mt: { xs: 3, lg: 0 } }}>
             <CenteredBlogCard
-              image={IMAGES.product24}
-              title="Ice crusher Machine"
+              image={cardImage}
+              title="Direct Refrigeration Block Ice Machine"
               description=""
               action={{
                 type: "internal",

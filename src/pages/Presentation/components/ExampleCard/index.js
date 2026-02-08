@@ -57,9 +57,9 @@ function ExampleCard({ image, name, count, pro, ...rest }) {
         width="100%"
         minHeight="16rem"
         maxHeight="16rem"
-
         my="auto"
         opacity={pro ? 0.6 : 1}
+        sx={{ objectFit: "cover", objectPosition: "center" }}
       />
     </MKBox>
   );
